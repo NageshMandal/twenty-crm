@@ -1,0 +1,136 @@
+import React, { forwardRef, useMemo, useState } from "react";
+import DatePicker from "react-datepicker";
+import Input from "../Input";
+import { getMonth, getYear, eachYearOfInterval } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
+
+type Props = {
+  value?: string;
+  onClick?: React.MouseEventHandler;
+  label?: string;
+  disabled?: boolean;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+};
+
+const CalendarInput = forwardRef<any, Props>(({ value, onClick, label, onChange }, ref) => (
+  <div onClick={onClick} ref={ref}>
+    <Input label={label} value={value} onChange={onChange} className='!py-10' />
+  </div>
+));
+
+type DatePickerProps = {
+  name: string;
+  timePicker?: boolean;
+  dateFormat?: string;
+  locale?: string;
+  label?: string;
+  disabled?: boolean;
+};
+
+const DateTimePicker: React.FC<DatePickerProps> = ({
+  timePicker = false,
+  dateFormat = "MM/dd/yyyy",
+  locale = "en",
+  label,
+}) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const years = useMemo(() => {
+    const startDate = new Date(1980, 0, 1);
+    const endDate = new Date(2500, 0, 1);
+
+    const yearList = eachYearOfInterval({ start: startDate, end: endDate }).map((year) =>
+      year.getFullYear()
+    );
+    return yearList;
+  }, []);
+
+  const [value, setValue] = useState(new Date());
+  return (
+    <div className='relative w-full'>
+      <DatePicker
+        renderCustomHeader={({
+          date,
+          changeYear,
+          changeMonth,
+          decreaseMonth,
+          increaseMonth,
+          prevMonthButtonDisabled,
+          nextMonthButtonDisabled,
+        }) => (
+          <div className='m-10 flex justify-center gap-10'>
+            <button
+              onClick={decreaseMonth}
+              disabled={prevMonthButtonDisabled}
+              className='text-white'
+            >
+              {"<"}
+            </button>
+            <select
+              className='bg-primary py-2 px-4 text-white text-center border-primary-1 border focus-visible:!ring-0 focus-visible:!outline-none scrollbar-1'
+              value={getYear(date)}
+              onChange={(event) => changeYear(Number(event?.target?.value))}
+            >
+              {years.map((option) => (
+                <option
+                  key={option}
+                  value={option}
+                  className='bg-contentColor dark:bg-contentColor-dark text-neutral-800 dark:text-neutral-300 hover:!bg-hoverColor-dark appearance-none'
+                >
+                  {option}
+                </option>
+              ))}
+            </select>
+            <select
+              className='bg-primary py-2 px-4 text-center text-white border-primary-1 border focus-visible:!ring-0 focus-visible:!outline-none max-h-100 overflow-auto'
+              value={months[getMonth(date)]}
+              onChange={(event) => changeMonth(months.indexOf(event?.target?.value))}
+            >
+              {months.map((option) => (
+                <option
+                  key={option}
+                  value={option}
+                  className='bg-contentColor dark:bg-contentColor-dark text-neutral-800 dark:text-neutral-300 hover:!bg-gray-100 leading-18'
+                >
+                  {option}
+                </option>
+              ))}
+            </select>
+
+            <button
+              className='text-white'
+              onClick={increaseMonth}
+              disabled={nextMonthButtonDisabled}
+            >
+              {">"}
+            </button>
+          </div>
+        )}
+        selected={value}
+        dateFormat={dateFormat}
+        onChange={(date: Date) => setValue(date)}
+        locale={locale}
+        showTimeSelect={timePicker}
+        showTimeSelectOnly={timePicker}
+        timeIntervals={30}
+        timeCaption='Time'
+        customInput={<CalendarInput label={label} />}
+      />
+    </div>
+  );
+};
+
+export default DateTimePicker;

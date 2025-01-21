@@ -1,0 +1,43 @@
+.wrapper {
+  @apply z-40 phone:hidden;
+
+  .dialog {
+    @apply flex absolute inset-0 bg-contentColor;
+
+    .main {
+      @apply pb-50;
+    }
+
+    .content {
+      @apply relative w-screen;
+
+      .main {
+        @apply pb-30;
+
+        .logoWrapper {
+          @apply flex z-50 justify-start items-center border-b border-borderColor px-12 sticky top-0 bg-contentColor;
+
+          .iconWrapper {
+            @apply h-65 w-35 justify-center items-center flex;
+
+            .icon {
+              @apply w-35 h-35;
+            }
+          }
+
+          .logoTitle {
+            @apply text-30 text-primary font-medium leading-30 pl-6 transition-all w-0 overflow-hidden select-none;
+
+            &.active {
+              @apply w-full;
+            }
+          }
+        }
+      }
+
+      .button {
+        @apply mx-8 mt-25;
+      }
+    }
+  }
+}

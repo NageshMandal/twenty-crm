@@ -1,0 +1,30 @@
+.defaultStyle {
+    @apply flex justify-center items-center gap-6 rounded-xl border whitespace-nowrap  transition-all duration-300 text-white border-primary-2 text-13 leading-20 py-10 px-7 font-semibold;
+    background: radial-gradient(
+            80% 80% at 50% 100%,
+            rgba(255, 255, 255, 0.45) 0%,
+            rgba(0, 0, 0, 0) 100%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        rgb(10, 102, 194);
+    background-blend-mode: overlay, normal;
+    box-shadow: rgba(49, 107, 255, 0.28) 0px 3px 4px;
+
+    &:hover {
+        background: radial-gradient(
+                50% 50% at 50% 100%,
+                rgba(255, 255, 255, 0.45) 0%,
+                rgba(0, 0, 0, 0) 100%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgb(10, 102, 194);
+    }
+
+    .label {
+        @apply w-0 overflow-hidden;
+
+        &.active {
+            @apply w-full;
+        }
+    }
+}

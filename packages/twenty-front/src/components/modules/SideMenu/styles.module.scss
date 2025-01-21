@@ -1,0 +1,68 @@
+.item {
+  @apply flex justify-start items-center gap-6  p-8 rounded-lg transition-all duration-0;
+
+  .fill {
+    @apply duration-0;
+    fill: var(--menuItemDefault);
+  }
+
+  .stroke {
+    @apply duration-0;
+    stroke: var(--menuItemDefault);
+  }
+
+  .label {
+    @apply text-hover-2;
+    color: var(--menuItemDefault);
+  }
+
+  .icon {
+    @apply w-16 h-16 flex-none pl-4 ml-2;
+  }
+
+  &:hover {
+    background-color: var(--hoverColor);
+
+    .fill {
+      @apply duration-0;
+      fill: var(--menuItemHover);
+    }
+
+    .stroke {
+      @apply duration-0;
+      stroke: var(--menuItemHover);
+    }
+
+    .label {
+      @apply text-hover-2;
+      color: var(--menuItemHover);
+    }
+  }
+
+  &.active {
+    background-color: var(--hoverColor);
+
+    .fill {
+      @apply duration-0;
+      fill: var(--menuItemActive);
+    }
+
+    .stroke {
+      @apply duration-0;
+      stroke: var(--menuItemActive);
+    }
+  }
+
+  .label {
+    @apply text-13 leading-20 font-medium whitespace-nowrap w-0 overflow-hidden transition-none duration-0;
+
+    &.open {
+      @apply w-full;
+    }
+
+    &.highlight {
+      @apply text-primary-2;
+      color: var(--menuItemActive);
+    }
+  }
+}
